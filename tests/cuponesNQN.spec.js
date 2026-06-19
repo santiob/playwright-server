@@ -516,7 +516,7 @@ console.log('✅ Click en Patagonia Minibingo ejecutado');
     await iframe.getByRole('button', { name: 'JUGAR' }).click();
     console.log('✅ Click en JUGAR ejecutado');
     
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await page.screenshot({ path: 'test-results/telebingo-04-cupon-generado.png', fullPage: true });
     
     console.log('🎉 ¡Test de Patagonia Telebingo completado exitosamente!');
