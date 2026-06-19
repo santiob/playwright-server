@@ -357,8 +357,7 @@ test.describe('Test Lotline La Neuquina', () => {
     // Búsqueda específica DENTRO DEL IFRAME
     const cuponPopup = iframe.locator('div#download.cuponFinal').first();
     await cuponPopup.waitFor({ state: 'visible', timeout: 1000 });
-    await page.screenshot({ path: 'test-results/quiniela-cupon-generado.png', fullPage: true });
-    
+        
          // Verificar mensaje de éxito específico
     const mensajeExito = iframe.locator('div.text-success:has-text("¡CUPON GENERADO!")').first();
     await mensajeExito.waitFor({ state: 'visible', timeout: 1000 });
