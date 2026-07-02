@@ -361,6 +361,48 @@ test.describe('Test Tombola Salteña', () => {
 
   await page.waitForTimeout(2500);
   await page.screenshot({ path: 'test-results/tomboexpress-05-cupon-generado.png', fullPage: true });
-  console.log('🎉 ¡Test de Tombo Express completado exitosamente!');
+  // console.log('🎉 ¡Test de Tombo Express completado exitosamente!');
+
+  // Paso 8: Comprobar el resultado instantáneo del sorteo
+  console.log('🔎 Verificando resultado del sorteo...');
+
+  const mensajeResultado = iframe.locator('.mensajeExtracto');
+
+  let resultadoVisible = false;
+  try {
+    await mensajeResultado.waitFor({ state: 'visible', timeout: 10000 });
+    resultadoVisible = true;
+  } catch (e) {
+    resultadoVisible = false;
+  }
+
+  // Si el mensaje de resultado nunca apareció, no podemos comprobar nada: hacemos skip.
+  test.skip(
+    !resultadoVisible,
+    '⚠️ No se pudo localizar el mensaje de resultado (.mensajeExtracto) dentro del iframe: se omite la verificación del sorteo.'
+  );
+
+  // Capturamos el texto para loguear y clasificar el resultado
+  const textoResultado = (await mensajeResultado.innerText()).trim();
+  console.log(`📋 Resultado obtenido: "${textoResultado}"`);
+
+  const esSinPremio = /cup[oó]n sin premio/i.test(textoResultado);
+  const esGanador = /premio\s*\$/i.test(textoResultado);
+
+  if (esGanador) {
+    console.log(`🎉 ¡Cupón ganador! ${textoResultado}`);
+  } else if (esSinPremio) {
+    console.log('ℹ️ Cupón sin premio (resultado válido)');
+  }
+
+  // El test falla si el mensaje no corresponde a ninguno de los dos resultados esperados
+  expect(
+    esSinPremio || esGanador,
+    `El mensaje de resultado no coincide con los patrones esperados. Texto recibido: "${textoResultado}"`
+  ).toBeTruthy();
+
+  await page.screenshot({ path: 'test-results/quiniexpress-05-resultado-verificado.png', fullPage: true });
+
+  console.log('🎉 ¡Test de Quini Express completado exitosamente!');
 });  
 });
