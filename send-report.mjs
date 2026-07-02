@@ -105,10 +105,10 @@ const fecha = new Date().toLocaleDateString('es-AR', {
 });
 
 // Comprimir solo playwright-report (sin videos ni screenshots)
-const zipPath = path.resolve('./playwright-report.zip');
+const zipPath = path.resolve('./test-results.zip');
 if (fs.existsSync(reportDir)) {
   // Excluir archivos pesados
-  execSync(`zip -r ${zipPath} ./playwright-report -x "*.webm" -x "*.mp4" -x "*.png"`);
+  execSync(`zip -r ${zipPath} ./test-results -x "*.webm" -x "*.mp4"`);
 }
 
 const attachments = [];
@@ -118,7 +118,7 @@ if (fs.existsSync(zipPath)) {
   
   if (zipSize < 35 * 1024 * 1024) {
     attachments.push({
-      filename: 'playwright-report.zip',
+      filename: 'test-results.zip',
       content: fs.readFileSync(zipPath).toString('base64'),
       encoding: 'base64',
     });
@@ -138,7 +138,7 @@ const response = await resend.emails.send({
     ${passedSuites}
     ${failedTests}
     <hr/>
-    <p>📎 El reporte completo se encuentra adjunto en <strong>playwright-report.zip</strong></p>
+    <p>📎 El reporte completo se encuentra adjunto en <strong>test-results.zip</strong></p>
   `,
   attachments,
 });
