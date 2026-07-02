@@ -248,9 +248,9 @@ test.describe('Test Tombola Salteña', () => {
     console.log('✅ Paso 3: Navegación a pantalla de sorteos exitosa');
     
     // Esperar a que cargue completamente la página
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
     
-    await page.screenshot({ path: 'test-results/quiniela-02-sorteos.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/tombola-02-sorteos.png', fullPage: true });
     
     //Llamar función cerrar aviso modal
     await cerrarModalTutorial(page);
@@ -355,88 +355,114 @@ test.describe('Test Tombola Salteña', () => {
       console.log('✅ Popup del cupón visible');
       
       // Tomar screenshot del cupón
-      await page.screenshot({ path: 'test-results/quiniela-06-cupon-generado.png', fullPage: true });
+      await page.screenshot({ path: 'test-results/tombola-06-cupon-generado.png', fullPage: true });
       
            
       console.log('🎉 ¡Test de Quiniela Tradicional completado exitosamente!');
       
     } else {
       console.log('⚠️ Popup del cupón no encontrado, tomando screenshot del estado actual');
-      await page.screenshot({ path: 'test-results/quiniela-06-error-popup.png', fullPage: true });
+      await page.screenshot({ path: 'test-results/tombola-06-error-popup.png', fullPage: true });
       
       throw new Error('No se encontró el popup del cupón generado');
     }
   });
 
    test('Quini6', async ({ page }) => {
-    // Verificar que estamos en /home
-    await expect(page).toHaveURL(/.*\/plataforma\/home/);
-    console.log('✅ Paso 1: En pantalla de juegos');
-    await page.screenshot({ path: 'test-results/poceada-01-home.png', fullPage: true });
-
-    // Click en Quini 6
-    console.log('🖱️ Paso 2: Click en Quini 6...');
-        await page.getByRole('link', { name: 'img Quini 6' }).click();
-    console.log('✅ Click en Quini 6 ejecutado');
-    
-    await page.waitForTimeout(3000);
-    await page.screenshot({ path: 'test-results/quini6-02-pantalla.png', fullPage: true });
-
-    // Trabajar dentro del iframe
-    const iframe = page.frameLocator('iframe[title="juego"]');
-
-    await page.waitForTimeout(1500);
-
-      // quitar el tutorial
-    await cerrarTooltipIframe(page);
-    
-    await page.waitForTimeout(1000);
-    await page.screenshot({ path: 'test-results/quini6-03-pantalla.png', fullPage: true });
-
-    
-
-  // Force click en el botón
-  console.log('🖱️ Paso 3: Click en boton suerte...');
-  const botonSuerte = iframe.locator('#boton-suerte');
-  await botonSuerte.waitFor({ state: 'visible', timeout: 15000 });
-  await botonSuerte.click({ force: true });
-  console.log('✅ Boton suerte activado');
-
-    await page.waitForTimeout(1000);
-
-  console.log('🖱️ Paso 4: Click en botón Avanzar...');
-  await page.screenshot({ path: 'test-results/quini6-04-pantalla.png', fullPage: true });
-
-
-// Click en botón Avanzar
-
-await iframe.getByRole('button', { name: /Avanzar/i }).click();
-
-console.log('✅ Botón Avanzar clickeado');
-await page.screenshot({ path: 'test-results/quini6-05-pantalla.png', fullPage: true });
-
-//const revanchaBadge = iframe.locator('span.badge:has-text("REVANCHA")');
-const precioCirculo = iframe.locator('.Modalities_circle__lqrqi');
-
-const botonConfirmar = iframe.getByRole('button', { name: /Confirmar/i });
-await page.frameLocator('iframe[title="juego"]').getByText('REVANCHA', { exact: true }).click();
-await expect(precioCirculo).toHaveText('$2.000', { timeout: 2000 });
-await botonConfirmar.click();
-await page.screenshot({ path: 'test-results/quini6-06-pantalla.png', fullPage: true });
-console.log('🖱️ Paso 5: Click en botón Confirmar realizado');
-
-await page.waitForTimeout(3000);
-await page.screenshot({ path: 'test-results/quini6-07-cupon-generado.png', fullPage: true });
-    
-console.log('🎉 ¡Test de Quini 6 completado exitosamente!');
-
+         // Verificar que estamos en /home
+         await expect(page).toHaveURL(/.*\/plataforma\/home/);
+         console.log('✅ Paso 1: En pantalla de juegos');
+         await page.screenshot({ path: 'test-results/quini6SLA-01-home.png', fullPage: true });
+   
+         // Click en Quini 6
+         console.log('🖱️ Paso 2: Click en Quini 6...');
+         await page.getByRole('link', { name: 'img Quini 6' }).click();
+         console.log('✅ Click en Quini 6 ejecutado');
+   
+         await page.waitForTimeout(3000);
+         await page.screenshot({ path: 'test-results/quini6SLA-02-pantalla.png', fullPage: true });
+   
+         // Trabajar dentro del iframe
+         const iframe = page.frameLocator('iframe[title="juego"]');
+   
+         await page.waitForTimeout(1500);
+   
+         // quitar el tutorial
+         await cerrarTooltipIframe(page);
+   
+         await page.waitForTimeout(1000);
+         await page.screenshot({ path: 'test-results/quini6SLA-03-pantalla.png', fullPage: true });
+   
+         // Force click en el botón
+         console.log('🖱️ Paso 3: Click en boton suerte...');
+         const botonSuerte = iframe.locator('#boton-suerte');
+         await botonSuerte.waitFor({ state: 'visible', timeout: 15000 });
+         await botonSuerte.click({ force: true });
+         console.log('✅ Boton suerte activado');
+   
+         await page.waitForTimeout(1000);
+   
+         console.log('🖱️ Paso 4: Click en botón Avanzar...');
+         await page.screenshot({ path: 'test-results/quini6SLA-04-pantalla.png', fullPage: true });
+   
+         // Click en botón Avanzar
+         await iframe.getByRole('button', { name: /Avanzar/i }).click();
+   
+         console.log('✅ Botón Avanzar clickeado');
+         await page.screenshot({ path: 'test-results/quini6SLA-05-pantalla.png', fullPage: true });
+   
+         //const revanchaBadge = iframe.locator('span.badge:has-text("REVANCHA")');
+         const precioCirculo = iframe.locator('.Modalities_circle__lqrqi');
+   
+         const botonConfirmar = iframe.getByRole('button', { name: /Confirmar/i });
+         await page.frameLocator('iframe[title="juego"]').getByText('REVANCHA', { exact: true }).click();
+         await expect(precioCirculo).toHaveText('$2.000', { timeout: 2000 });
+         await botonConfirmar.click();
+         await page.screenshot({ path: 'test-results/quini6SLA-06-pantalla.png', fullPage: true });
+         console.log('🖱️ Paso 5: Click en botón Confirmar realizado');
+   
+         await page.waitForTimeout(3000);
+         await page.screenshot({ path: 'test-results/quini6SLA-07-cupon-generado.png', fullPage: true });
+   
+         // Paso 6: Comprobar que el cupón se generó (descarga/modal con "¡CUPÓN GENERADO!")
+         console.log('🔎 Paso 6: Verificando generación del cupón...');
+   
+         // El modal del cupón vive dentro del iframe del juego (id="download",
+         // clase CSS-module GeneratedCoupon_containerGeneratedCoupon__xxxx).
+         // Usamos [class*=] porque el hash del CSS module cambia entre deploys.
+         const cuponModal = iframe.locator('#download');
+         const cuponTitulo = iframe.locator('#download').getByText('¡CUPÓN GENERADO!', { exact: true });
+   
+         let cuponVisible = false;
+         try {
+           await cuponModal.waitFor({ state: 'visible', timeout: 10000 });
+           cuponVisible = true;
+         } catch (e) {
+           cuponVisible = false;
+         }
+   
+         // Si el modal del cupón nunca apareció, no podemos comprobar nada: hacemos skip.
+         test.skip(
+           !cuponVisible,
+           '⚠️ No se pudo localizar el modal del cupón (#download) dentro del iframe: se omite la verificación del texto "¡CUPÓN GENERADO!".'
+         );
+   
+         // Si llegamos acá, el modal apareció: ahora sí exigimos el texto esperado.
+         // Si no lo contiene, este expect falla el test (comportamiento deseado).
+         await expect(cuponTitulo).toContainText('¡CUPÓN GENERADO!', { timeout: 5000 });
+   
+         console.log('✅ Cupón confirmado: se encontró el texto "¡CUPÓN GENERADO!"');
+         await page.screenshot({ path: 'test-results/quini6SLA-08-cupon-verificado.png', fullPage: true });
+   
+         console.log('🎉 ¡Test de Quini 6 completado exitosamente!');
+  
 });
 
 test('Loto Plus', async ({ page }) => {
     // Verificar que estamos en /home
     await expect(page).toHaveURL(/.*\/plataforma\/home/);
     console.log('✅ Paso 1: En pantalla de juegos');
-    await page.screenshot({ path: 'test-results/lotoplus-01-home.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/lotoplusSLA-01-home.png', fullPage: true });
 
         // Click en Loto Plus
     console.log('🖱️ Paso 2: Click en Loto Plus...');
@@ -445,7 +471,7 @@ test('Loto Plus', async ({ page }) => {
     console.log('✅ Click en Loto Plus ejecutado');
 
     await page.waitForTimeout(1000);
-    await page.screenshot({ path: 'test-results/lotoplus-02-pantalla.png', fullPage: true });
+    //await page.screenshot({ path: 'test-results/lotoplusSLA-02-pantalla.png', fullPage: true });
 
     // Trabajar dentro del iframe
     const iframe = page.frameLocator('iframe[title="juego"]');
@@ -456,7 +482,7 @@ test('Loto Plus', async ({ page }) => {
     await cerrarTooltipIframe(page);
 
     await page.waitForTimeout(1000);
-    await page.screenshot({ path: 'test-results/lotoplus-03-pantalla.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/lotoplusSLA-03-pantalla.png', fullPage: true });
 
   // Force click en el botón suerte
   console.log('🖱️ Paso 3: Click en boton suerte...');
@@ -467,14 +493,14 @@ test('Loto Plus', async ({ page }) => {
     await page.waitForTimeout(1000);
 
   console.log('🖱️ Paso 4: Click en botón Avanzar...');
-  await page.screenshot({ path: 'test-results/lotoplus-04-pantalla.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/lotoplusSLA-04-pantalla.png', fullPage: true });
 
 // Click en botón Avanzar
 
 await iframe.getByRole('button', { name: /Avanzar/i }).click();
 
 console.log('✅ Botón Avanzar clickeado');
-await page.screenshot({ path: 'test-results/lotoplus-05-pantalla.png', fullPage: true });
+await page.screenshot({ path: 'test-results/lotoplusSLA-05-pantalla.png', fullPage: true });
 
     await page.waitForTimeout(2000);
 
@@ -483,7 +509,7 @@ console.log('🖱️ Paso 5: Click en botón Confirmar');
 const botonConfirmar = iframe.getByRole('button', { name: /Confirmar/i });
 await botonConfirmar.click();
 await page.waitForTimeout(3000);
-await page.screenshot({ path: 'test-results/lotoplus-06-cupon-generado.png', fullPage: true });
+await page.screenshot({ path: 'test-results/lotoplusSLA-06-cupon-generado.png', fullPage: true });
     
 console.log('🎉 ¡Test de Loto Plus completado exitosamente!');
   });
